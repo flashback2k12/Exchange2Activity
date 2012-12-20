@@ -1,0 +1,57 @@
+/**
+ * Variable Vorname; dauerhafte Speicherung innerhalb der Laufzeit.
+ * 
+ * Variable Nachname: Änderung bei jeder neuen Eingabe.
+ */
+
+package com.flashback.exchange2activity;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
+
+public class MainActivity extends Activity {
+	
+	EditText Vorname; 
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		Vorname = (EditText)findViewById(R.id.etVorname); 
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
+
+	public void BtnUebergabe (View view) {	
+		EditText FeldVorname = Vorname; 
+		EditText FeldNachname = (EditText)findViewById(R.id.etNachname); 
+		
+		String Vorname = FeldVorname.getText().toString(); 
+		String Nachname = FeldNachname.getText().toString();
+		
+		GlobalData.gd.setVorname(Vorname);
+		GlobalData.gd.setNachname(Nachname); 
+		
+		setContentView(R.layout.activity_sub); 
+	}
+	
+	public void BtnHolen (View view) {
+		EditText FeldVornameSub = (EditText)findViewById(R.id.etVornameSub);
+		EditText FeldNachnameSub = (EditText)findViewById(R.id.etNachnameSub); 
+		
+		FeldVornameSub.setText(""+GlobalData.gd.getVorname());
+		FeldNachnameSub.setText(""+GlobalData.gd.getNachname());
+	}
+	
+	public void BtnZurueck (View view) {
+		setContentView(R.layout.activity_main); 
+	}
+}
